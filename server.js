@@ -1,3 +1,4 @@
+require("dotenv").config()
 const express = require("express")
 const mongoose = require ("mongoose")
 const cors = require ("cors")
@@ -7,7 +8,6 @@ const Addmin  = require("./Router/AddminRouter")
 const Ongoingproject  = require("./Router/OngoingprojectRouter")
 const completeproject  = require("./Router/completeprojectRouter")
 
-require("dotenv").config()
 
 const app = express()
 app.use(cors())
@@ -23,10 +23,10 @@ app.use(completeproject)
 // Static folder
 app.use("/Allimage" ,express.static ("images"))
 
-const Prot  = process.env.Prot || 2009
+const PORT = process.env.PORT || 2009;
 
-mongoose.connect(process.env.mongodb_url).then(() =>{
+mongoose.connect(process.env.MONGODB_URL).then(() =>{
     console.log('is conenctted mongo',)
 })
 
-app.listen(Prot , () => console.log(`server is on ${Prot}`))
+app.listen(PORT , () => console.log(`server is on ${PORT}`))
