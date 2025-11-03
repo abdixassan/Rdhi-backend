@@ -25,8 +25,15 @@ app.use("/Allimage" ,express.static ("images"))
 
 const PORT = process.env.PORT || 2009;
 
-mongoose.connect(process.env.MONGODB_URL).then(() =>{
-    console.log('is conenctted mongo',)
+// mongoose.connect(process.env.MONGODB_URL).then(() =>{
+//     console.log('is conenctted mongo',)
+// })
+mongoose.connect(process.env.MONGODB_URL, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  tls: true
 })
+.then(() => console.log("✅ MongoDB connected"))
+.catch(err => console.error("❌ MongoDB connection error:", err));
 
 app.listen(PORT , () => console.log(`server is on ${PORT}`))
