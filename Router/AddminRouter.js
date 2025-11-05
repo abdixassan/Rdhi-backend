@@ -1,8 +1,6 @@
 const express = require("express")
-const Addmincontroler = require("../Controller/Admincotroller")
+const Admincotroller = require("../Controller/Admincotroller")
 const router = express.Router()
-router.post("/create/addmin" , Addmincontroler.creatadmin)
-router.post("/login/addmin" ,Addmincontroler.adminlogin)
-router.get("/get/login" ,Addmincontroler.getadmin)
-
+router.post("/create/addmin" ,Admincotroller.admincreate)
+router.post("/login/addmin" ,Admincotroller.adminLOgin)
 module.exports = router

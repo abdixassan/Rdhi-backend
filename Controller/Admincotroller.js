@@ -1,24 +1,26 @@
-const Adminmodel = require("../models/AddminModel")
+const scemaadmin = require ("../models/AdminModel")
 const bcrypt = require("bcryptjs");
   
-const creatadmin = async (req , res)  => {
+const admincreate = async (req , res)  => {
     try {
     
     const {name ,email ,phone ,Address , password , } = req.body 
         // cheak email
-        const Cheakemail = await Adminmodel.findOne({email})
+        const Cheakemail = await scemaadmin.findOne({email})
         if(Cheakemail){
            return res.status(500).send({error: "this Email already exest" })
         }
   
         const hashpassaword =  await bcrypt.hash( password, 10)
 
-        const newDate = new Adminmodel({
+        const newDate = new scemaadmin({
             name,
             email,
             phone,
             Address,
             password :hashpassaword,
+            prImage : req.file ? req.file.filename : null
+
             })
         const saveDate =  await newDate.save() 
         if (saveDate) {
@@ -32,11 +34,11 @@ const creatadmin = async (req , res)  => {
     }
 }
 // log in costomers
-const adminlogin = async (req ,res) =>{
+const adminLOgin = async (req ,res) =>{
     try {
         const {email ,password} =req.body
          
-         const Cheakemail = await Adminmodel.findOne({email})
+         const Cheakemail = await scemaadmin.findOne({email})
         if(!Cheakemail){
           return  res.status(500).send({error: "envailte email" })
         }
@@ -62,18 +64,9 @@ const adminlogin = async (req ,res) =>{
 }
 
 //  get all cotomers 
-const getadmin = async (req, res) => {
-  try {
-    const costomers = await Adminmodel.find().select("password"); 
-    // select("-password") si password aan loo soo celin
-    res.status(200).json(costomers);
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({ error: "server error" });
-  }
-};
 
 
 
 
-module.exports = {creatadmin ,adminlogin ,getadmin}
+
+module.exports = {adminLOgin , admincreate}
